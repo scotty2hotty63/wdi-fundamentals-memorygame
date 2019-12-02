@@ -21,10 +21,15 @@ const cards = [
 		cardImage: "images/king-of-diamonds.png",
 	}
 ];
+
+
+
 //Cards in play, empty at start
 const cardsInPlay = [];
 
+//Checks for a match, and only displays a message if 2 cards have been flipped.
 function checkForMatch() {
+	
 	if (cardsInPlay.length === 2 && cardsInPlay[0] === cardsInPlay[1]) {
 		//console.log("You found a match!");
 		alert("You found a match!");
@@ -36,9 +41,15 @@ function checkForMatch() {
 	}
 };
 
-function flipCard(cardId) {
+//Logs what cards are flipped, and adds them to in play
+function flipCard() {
+	const cardId = this.getAttribute('data-id')
 	console.log("User flipped " + cards[cardId].rank);
+
 	cardsInPlay.push(cards[cardId].rank);
+
+	this.setAttribute('src', cards[cardId].cardImage);
+
 	checkForMatch();
 	console.log(cards[cardId].suit);
 	console.log(cards[cardId].cardImage);
@@ -50,6 +61,17 @@ function flipCard(cardId) {
 	}*/
 };
 
+//Creates the board
+function createBoard() {
+	for (let i = 0; i < cards.length; i++) {
+		const cardElement = document.createElement('img');
+		cardElement.setAttribute('src', "images/back.png");
+		cardElement.setAttribute('data-id', i);
+		cardElement.addEventListener('click', flipCard);
+		document.getElementById('game-board').appendChild(cardElement);
 
-flipCard(0);
-flipCard(2);
+	}
+}
+
+//Initiates creating the board
+createBoard;
